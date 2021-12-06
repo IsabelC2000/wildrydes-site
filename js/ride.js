@@ -66,7 +66,6 @@ WildRydes.map = WildRydes.map || {};
 
                 innerHTML += `<h4>Date: ${wx.daily[0].date}</h4>
                         <h5>Temp: Low ${wx.daily[0].min}&deg; / High: ${wx.daily[0].max}&deg;</h5>
-                        <p>Forecast: <img src 'http://openweathermap.org/img/wn/${wx.daily[0].icon}@2x.png' alt=""> ${wx.daily[0].description}</p>}
                         <p>Sunrise: ${wx.daily[0].sunrise} / Sunset: ${wx.daily[0].sunset}</p>`;
                 displayUpdate(innerHTML);
 
