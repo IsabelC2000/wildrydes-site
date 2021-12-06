@@ -67,15 +67,12 @@ WildRydes.map = WildRydes.map || {};
                 innerHTML += `<h4>Date: ${wx.daily[0].date}</h4>
                         <h5>Temp: Low ${wx.daily[0].min}&deg; / High: ${wx.daily[0].max}&deg;</h5>
                         <p>Forecast: <img src 'http://openweathermap.org/img/wn/${wx.daily[0].icon}@2x.png' alt=""> ${wx.daily[0].description}</p>}
-                        <p>Chance of rain at ${wx.daily[0].pop}%</p>
-                        <p>Wind at ${wx.daily[0].wind_speed} mph out of the ${wx.daily[0].windDirection}</p>
                         <p>Sunrise: ${wx.daily[0].sunrise} / Sunset: ${wx.daily[0].sunset}</p>`;
                 displayUpdate(innerHTML);
 
                 msg = `${niceDate(weather.current.dt, weather.timezone_offset)}
                        ${niceTime(weather.current.dt, weather.timezone_offset)}
-                       Temp is ${KtoF(weather.current.temp)} degrees, 
-                       Wind at ${weather.current.wind_speed} miles per hour, out of the ${windDirection(weather.current.wind_deg, true)} ,
+                       Temp is ${KtoF(weather.current.temp)} degrees,
                        Sunset will be at ${niceTime(eather.current.sunset, weather.timezone_offset)}`
                 console.log(msg);
                 let speech = new SpeechSynthesisUtterance();
@@ -96,9 +93,6 @@ WildRydes.map = WildRydes.map || {};
             sunset:         niceTime(d.sunset, data.timezone_offset),
             icon:           d.weather[0].icon,
             description:    d.weather[0].description,
-            wind_speed:     d.wind_speed.toFixed(0),
-            windDirection:  windDirection(d.wind_deg, true),
-            pop:            (d.pop * 100).toFixed(0)
             feels_like:     KtoF(d.feels_like.day),
             dewPoint:       d.dew_point,
             humidity:       d.humidity,
@@ -163,22 +157,6 @@ WildRydes.map = WildRydes.map || {};
 }(jQuery));
 
 let message;
-
-function windDirection(degrees, long) {
-    let direction;
-    if (long)
-        direction = ["North", "North by North East", "North East", "East by North East",
-            "East",     "East by South East", "South East", "South by South East",
-            "South",    "South by South West", "South West", "West by South West",
-            "West",     "West by North West", "North West", "North by North West",
-            "North"];
-    else
-        direction =["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW", "N"];
-
-    degrees = Math.round(degrees + 11.25) % 360;
-    let index = Math.floor(degrees / 22.5);
-    return direction[index];
-}
 
 function niceDate(date, offset) {
     let day = new Date(date * 1000 + offset);
